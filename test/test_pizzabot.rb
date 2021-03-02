@@ -1,6 +1,4 @@
-$:.unshift(File.expand_path('../lib', __dir__))
-
-require 'minitest/autorun'
+require_relative 'setup'
 require 'pizzabot'
 
 class TestPizzabot < Minitest::Test
@@ -8,7 +6,7 @@ class TestPizzabot < Minitest::Test
     assert_equal(Pizzabot.version, '0.0.1')
   end
 
-  def test_running
-    assert_equal(Pizzabot.run("test"), "it works: test")
+  def test_invalid_args
+    assert_equal(Pizzabot.run('invalid'), 'invalid args')
   end
 end
