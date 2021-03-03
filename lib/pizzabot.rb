@@ -7,6 +7,8 @@ module Pizzabot
 
   def self.run(args)
     puts App.new(args).run
+  rescue ValidationError => e
+    puts e.message
   end
 
   def self.version

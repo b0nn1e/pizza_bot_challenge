@@ -2,35 +2,39 @@
 
 module Pizzabot
   class Point
-    attr_accessor :x, :y
+    attr_reader :x, :y
 
     def initialize(x_cord, y_cord)
-      self.x = x_cord.to_i
-      self.y = y_cord.to_i
+      @x = x_cord.to_i
+      @y = y_cord.to_i
     end
 
     def ==(other)
       x == other.x && y == other.y
     end
 
-    def move_right!
+    def inc_x!
       self.x += 1
     end
 
-    def move_left!
+    def dec_x!
       self.x -= 1
     end
 
-    def move_top!
+    def inc_y!
       self.y += 1
     end
 
-    def move_bottom!
+    def dec_y!
       self.y -= 1
     end
 
     def to_s
       "Point##{object_id} x: #{x}, y: #{y}"
     end
+
+    private
+
+    attr_writer :x, :y
   end
 end

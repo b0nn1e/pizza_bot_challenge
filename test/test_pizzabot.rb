@@ -16,8 +16,28 @@ class TestPizzabot < Minitest::Test
     assert_equal_output('invalid', 'invalid args')
   end
 
-  def test_invalid_empty_args
+  def test_empty_args
+    assert_equal_output('', 'empty args')
+  end
+
+  def test_only_spaces_in_args
     assert_equal_output(' ', 'empty args')
+  end
+
+  def test_without_filed_size
+    assert_equal_output('(1, 3) (4, 4)', 'invalid args')
+  end
+
+  def test_without_points
+    assert_equal_output('5x5', 'invalid args')
+  end
+
+  def test_without_spaces
+    assert_equal_output('5x5(2,2)(1,1)', 'EENNDWSD')
+  end
+
+  def test_with_final_space
+    assert_equal_output('5x5(2,2)(1,1) ', 'EENNDWSD')
   end
 
   def test_one_point

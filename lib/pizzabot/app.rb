@@ -1,59 +1,42 @@
 # frozen_string_literal: true
 
-require 'pizzabot/validator'
 require 'pizzabot/point'
 require 'pizzabot/field'
 require 'pizzabot/courier'
+require 'pizzabot/errors/validation_error'
 
 module Pizzabot
   class App
-    POINTS_REGEX = /\((\d),\s*(\d)\)/
+    INSTRUCTIONS_REGEXP = /^(\dx\d)\s?(\(\d,\s*\d\)\s*)+\s*$/
     FIELD_REGEXP = /(\d)\s*x\s*(\d)/
-
-    attr_reader :instructions
+    POINTS_REGEX = /\((\d),\s*(\d)\)/
 
     def initialize(instructions)
       @instructions = instructions
+      validate!
+
+      @field = build_field
+      @points = build_points
+      @courier = Courier.new
     end
 
     def run
-      return validator.error_message if validator.invalid?
+      points.each do |point|
+        loop do
+          break unless courier.try_to_move!(point)
+        end
+      end
 
-      build_route!
-      courier.route.join
+      courier.moved_route
     end
 
     private
 
-    attr_writer :instructions
+    attr_reader :instructions, :validator, :points, :field, :courier
 
-    def build_route!
-      loop do
-        break if points.empty?
-
-        point = points.shift
-        loop do
-          courier.drop! and break if courier.drop?(point)
-
-          courier.move_forward!(point)
-        end
-      end
-    end
-
-    def validator
-      @validator ||= Validator.new(instructions)
-    end
-
-    def points
-      @points ||= build_points
-    end
-
-    def field
-      @field ||= build_field
-    end
-
-    def courier
-      @courier ||= Courier.new
+    def validate!
+      raise ValidationError, 'empty args' if instructions.strip.empty?
+      raise ValidationError, 'invalid args' unless INSTRUCTIONS_REGEXP.match?(instructions)
     end
 
     def build_field
