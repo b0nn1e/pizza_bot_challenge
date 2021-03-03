@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 module Pizzabot
   class Courier
-    DROP_ACTION = 'D'.freeze
+    DROP_ACTION = 'D'
 
     MOVE_ACTIONS = {
-      top: 'N', # top
-      right: 'E', # right
-      bottom: 'S', # bottom
-      left: 'W' # left
-    }.freeze
+      top: 'N',
+      right: 'E',
+      bottom: 'S',
+      left: 'W'
+    }
 
     MOVE_ACTIONS.keys.each do |key|
       define_method "move_#{key}!" do

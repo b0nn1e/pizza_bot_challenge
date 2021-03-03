@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pizzabot
   class Field
     attr_accessor :x, :y

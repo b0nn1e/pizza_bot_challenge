@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pizzabot
   class Point
     attr_accessor :x, :y

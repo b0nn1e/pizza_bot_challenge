@@ -1,4 +1,6 @@
-require_relative 'setup'
+# frozen_string_literal: true
+
+require 'minitest/autorun'
 require 'pizzabot/validator'
 
 class TestValidateArgs < Minitest::Test

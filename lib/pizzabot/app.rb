@@ -1,18 +1,19 @@
-require_relative 'validator'
-require_relative 'point'
-require_relative 'field'
-require_relative 'courier'
+# frozen_string_literal: true
+
+require 'pizzabot/validator'
+require 'pizzabot/point'
+require 'pizzabot/field'
+require 'pizzabot/courier'
 
 module Pizzabot
   class App
-    POINTS_REGEX = /\((\d),\s*(\d)\)/.freeze
-    FIELD_REGEXP = /(\d)\s*x\s*(\d)/.freeze
+    POINTS_REGEX = /\((\d),\s*(\d)\)/
+    FIELD_REGEXP = /(\d)\s*x\s*(\d)/
 
-    attr_accessor :input, :output
+    attr_reader :instructions
 
-    def initialize(*args)
-      self.input = args.first
-      self.output = []
+    def initialize(instructions)
+      @instructions = instructions
     end
 
     def run
@@ -23,6 +24,8 @@ module Pizzabot
     end
 
     private
+
+    attr_writer :instructions
 
     def build_route!
       loop do
@@ -38,7 +41,7 @@ module Pizzabot
     end
 
     def validator
-      @validator ||= Validator.new(input)
+      @validator ||= Validator.new(instructions)
     end
 
     def points
@@ -54,12 +57,12 @@ module Pizzabot
     end
 
     def build_field
-      size = input.scan(FIELD_REGEXP).first
+      size = instructions.scan(FIELD_REGEXP).first
       Field.new(size[0], size[1])
     end
 
     def build_points
-      points = input.scan(POINTS_REGEX).map do |match|
+      points = instructions.scan(POINTS_REGEX).map do |match|
         Point.new(match[0], match[1])
       end
       points.reject { |point| field.excludes?(point) }

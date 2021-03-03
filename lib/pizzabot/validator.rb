@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Pizzabot
   class Validator
-    REGEXP = /^(\dx\d)\s?(\(\d,\s*\d\)\s*)+\s*$/.freeze
-    EMPTY_MESSAGE = 'empty args'.freeze
-    INVALID_FIELD_SIZE = 'invalid args'.freeze
+    REGEXP = /^(\dx\d)\s?(\(\d,\s*\d\)\s*)+\s*$/
+    EMPTY_MESSAGE = 'empty args'
+    INVALID_FIELD_SIZE = 'invalid args'
 
     attr_accessor :input, :error_message
 

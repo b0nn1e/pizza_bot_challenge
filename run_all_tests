@@ -1,4 +1,0 @@
-#!/bin/sh
-
-bundle install
-ruby -Ilib -e 'ARGV.each { |f| require f }' ./test/test*.rb
