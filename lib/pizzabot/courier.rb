@@ -10,9 +10,12 @@ module Pizzabot
     }.freeze
 
     MOVE_ACTIONS.keys.each do |key|
-      define_method "move_#{key}!" do
+      define_method "move_#{key}" do |point|
+        return unless send("move_#{key}?", point)
+
         route.push(MOVE_ACTIONS[key])
-        current_point.send("move_#{key}!")
+        current_point.public_send("move_#{key}!")
+        true
       end
     end
 
@@ -32,8 +35,7 @@ module Pizzabot
     end
 
     def move_forward!(point)
-      move_right! if move_right?(point)
-      move_top! if move_top?(point)
+      move_right(point) || move_top(point) || move_left(point) || move_bottom(point)
     end
 
     private
@@ -54,8 +56,8 @@ module Pizzabot
     end
 
     def move_bottom?(point)
-      current_point.x < point.x &&
-        current_point.y == point.y
+      current_point.x == point.x &&
+        current_point.y > point.y
     end
   end
 end

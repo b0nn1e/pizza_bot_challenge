@@ -31,7 +31,7 @@ class TestPizzabot < Minitest::Test
   end
 
   def test_correct_points_order
-    assert_equal(Pizzabot.run('5x5 (2, 2) (1, 1)'), 'ENDEND')
+    assert_equal(Pizzabot.run('5x5 (2, 2) (1, 1)'), 'EENNDWSD')
   end
 
   def test_only_excludes_point
@@ -52,5 +52,9 @@ class TestPizzabot < Minitest::Test
 
   def test_with_same_points
     assert_equal(Pizzabot.run('5x5 (1,1)(1,1)'), 'ENDD')
+  end
+
+  def test_moving_by_circle
+    assert_equal(Pizzabot.run('5x5 (1,1)(1,2)(2,2)(2,1)'), 'ENDNDEDSD')
   end
 end

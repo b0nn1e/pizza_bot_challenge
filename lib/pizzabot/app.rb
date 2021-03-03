@@ -6,7 +6,7 @@ require_relative 'courier'
 module Pizzabot
   class App
     POINTS_REGEX = /\((\d),\s*(\d)\)/.freeze
-    FILED_REGEXP = /(\d)\s*x\s*(\d)/.freeze
+    FIELD_REGEXP = /(\d)\s*x\s*(\d)/.freeze
 
     attr_accessor :input, :output
 
@@ -28,14 +28,11 @@ module Pizzabot
       loop do
         break if points.empty?
 
-        point = points.sort!.shift
+        point = points.shift
         loop do
-          if courier.drop?(point)
-            courier.drop!
-            break
-          else
-            courier.move_forward!(point)
-          end
+          courier.drop! and break if courier.drop?(point)
+
+          courier.move_forward!(point)
         end
       end
     end
@@ -57,7 +54,7 @@ module Pizzabot
     end
 
     def build_field
-      size = input.scan(FILED_REGEXP).first
+      size = input.scan(FIELD_REGEXP).first
       Field.new(size[0], size[1])
     end
 

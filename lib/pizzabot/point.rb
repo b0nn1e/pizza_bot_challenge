@@ -1,19 +1,10 @@
 module Pizzabot
   class Point
-    include Comparable
-
     attr_accessor :x, :y
 
     def initialize(x_cord, y_cord)
       self.x = x_cord.to_i
       self.y = y_cord.to_i
-    end
-
-    def <=>(other)
-      return 1 if distance > other.distance
-      return -1 if distance < other.distance
-
-      0
     end
 
     def ==(other)
@@ -36,8 +27,8 @@ module Pizzabot
       self.y -= 1
     end
 
-    def distance
-      Math.sqrt(x**2 + y**2)
+    def to_s
+      "Point##{object_id} x: #{x}, y: #{y}"
     end
   end
 end
