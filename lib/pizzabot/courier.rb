@@ -26,7 +26,7 @@ module Pizzabot
     end
 
     def moved_route
-      @route.join('')
+      route.join('')
     end
 
     private

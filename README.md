@@ -16,7 +16,7 @@ cd pizza_bot_challenge
 ./pizzabot "5x5 (0, 0) (1, 3) (4,4) (4, 2) (4, 2) (0, 1) (3, 2) (2, 3) (4, 1)"
 => DENNNDEEENDSSDDWWWWSDEEENDWNDEESSD
 ```
-#### Tests:
+### Tests:
 ```console
 bundle install
 rake test
