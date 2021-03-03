@@ -10,9 +10,7 @@ module Pizzabot
     }.freeze
 
     MOVE_ACTIONS.keys.each do |key|
-      define_method "move_#{key}" do |point|
-        return unless send("move_#{key}?", point)
-
+      define_method "move_#{key}!" do
         route.push(MOVE_ACTIONS[key])
         current_point.public_send("move_#{key}!")
         true
@@ -35,29 +33,30 @@ module Pizzabot
     end
 
     def move_forward!(point)
-      move_right(point) || move_top(point) || move_left(point) || move_bottom(point)
+      move_right! and return if move_right?(point)
+      move_left! and return if move_left?(point)
+      move_top! and return if move_top?(point)
+      move_bottom! and return if move_bottom?(point)
+
+      raise "Route not found. Current_point:#{current_point}, point: #{point}"
     end
 
     private
 
     def move_right?(point)
-      current_point.x < point.x &&
-        current_point.y <= point.y
+      current_point.x < point.x
     end
 
     def move_left?(point)
-      current_point.x > point.x &&
-        current_point.y > point.y
+      current_point.x > point.x
     end
 
     def move_top?(point)
-      current_point.x == point.x &&
-        current_point.y < point.y
+      current_point.y < point.y
     end
 
     def move_bottom?(point)
-      current_point.x == point.x &&
-        current_point.y > point.y
+      current_point.y > point.y
     end
   end
 end

@@ -57,4 +57,10 @@ class TestPizzabot < Minitest::Test
   def test_moving_by_circle
     assert_equal(Pizzabot.run('5x5 (1,1)(1,2)(2,2)(2,1)'), 'ENDNDEDSD')
   end
+
+  def test_example_from_task
+    act = 'DENNNDEEENDSSDDWWWWSDEEENDWNDEESSD'
+    exp = '5x5 (0, 0) (1, 3) (4,4) (4, 2) (4, 2) (0, 1) (3, 2) (2, 3) (4, 1)'
+    assert_equal(Pizzabot.run(exp), act)
+  end
 end
