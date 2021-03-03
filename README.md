@@ -18,5 +18,6 @@ cd pizza_bot_challenge
 ```
 #### Tests:
 ```console
-./run_all_tests
+bundle install
+rake test
 ```
